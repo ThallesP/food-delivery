@@ -29,7 +29,7 @@ export class AuthenticateDeliverymanUseCase {
 
     const token = sign(
       { username: deliveryman.username },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET_DELIVERYMAN,
       {
         subject: deliveryman.id,
         expiresIn: "1d",

@@ -8,7 +8,7 @@ interface IPayload {
   sub: string;
 }
 
-export function ensureClientAuthentication(
+export function ensureDeliverymanAuthentication(
   request: Request,
   response: Response,
   next: NextFunction
@@ -22,14 +22,14 @@ export function ensureClientAuthentication(
   const [, token] = authHeader.split(" ");
 
   try {
-    const { sub: client_id } = verify(
+    const { sub: deliveryman_id } = verify(
       token,
-      process.env.JWT_SECRET_CLIENT
+      process.env.JWT_SECRET_DELIVERYMAN
     ) as IPayload;
 
     request.auth = {
-      deliveryman_id: "",
-      client_id,
+      client_id: "",
+      deliveryman_id,
     };
 
     return next();

@@ -27,10 +27,14 @@ export class AuthenticateClientUseCase {
       throw new UsernameOrPasswordInvalidException();
     }
 
-    const token = sign({ username: client.username }, process.env.JWT_SECRET, {
-      subject: client.id,
-      expiresIn: "1d",
-    });
+    const token = sign(
+      { username: client.username },
+      process.env.JWT_SECRET_CLIENT,
+      {
+        subject: client.id,
+        expiresIn: "1d",
+      }
+    );
 
     return { token };
   }

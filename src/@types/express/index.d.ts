@@ -3,6 +3,7 @@ declare namespace Express {
   export interface Request {
     auth: {
       client_id: string;
+      deliveryman_id: string;
     };
   }
 }
