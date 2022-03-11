@@ -12,6 +12,7 @@
         "shared/exceptions/*"
       ]
     },
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
