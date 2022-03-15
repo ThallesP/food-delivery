@@ -4,6 +4,8 @@ import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import { AppException } from "@exceptions/AppException";
 
+import "@shared/container";
+
 import { routes } from "./routes";
 
 const app = express();

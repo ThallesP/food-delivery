@@ -1,9 +1,8 @@
 import { hash } from "bcrypt";
-import { injectable } from "tsyringe";
+import { IClientsRepository } from "modules/clients/repositories/IClientsRepository";
+import { inject, injectable } from "tsyringe";
 
 import { ClientAlreadyExistsException } from "@exceptions/ClientAlreadyExistsException";
-
-import { prisma } from "../../../../database/prismaClient";
 
 interface ICreateClient {
   username: string;
@@ -12,10 +11,13 @@ interface ICreateClient {
 
 @injectable()
 export class CreateClientUseCase {
+  constructor(
+    @inject("ClientsRepository")
+    private clientsRepository: IClientsRepository
+  ) {}
+
   async execute({ username, password }: ICreateClient) {
-    const clientExists = await prisma.client.findFirst({
-      where: { username: { mode: "insensitive", equals: username } },
-    });
+    const clientExists = await this.clientsRepository.findByUsername(username);
 
     if (clientExists) {
       throw new ClientAlreadyExistsException();
@@ -23,11 +25,9 @@ export class CreateClientUseCase {
 
     const passwordHash = await hash(password, 10);
 
-    const client = await prisma.client.create({
-      data: {
-        username,
-        password: passwordHash,
-      },
+    const client = await this.clientsRepository.create({
+      username,
+      password: passwordHash,
     });
 
     return client;

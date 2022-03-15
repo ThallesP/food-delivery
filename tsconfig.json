@@ -10,7 +10,10 @@
     "paths": {
       "@exceptions/*": [
         "shared/exceptions/*"
-      ]
+      ],
+      "@shared/*": [
+        "shared/*"
+      ],
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,
