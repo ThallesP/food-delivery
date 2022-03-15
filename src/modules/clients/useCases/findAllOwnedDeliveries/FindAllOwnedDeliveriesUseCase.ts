@@ -1,19 +1,17 @@
-import { prisma } from "database/prismaClient";
-import { injectable } from "tsyringe";
+import { IClientsRepository } from "modules/clients/repositories/IClientsRepository";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class FindAllOwnedDeliveriesUseCase {
+  constructor(
+    @inject("ClientsRepository")
+    private clientsRepository: IClientsRepository
+  ) {}
+
   async execute(client_id: string) {
-    const deliveries = await prisma.client.findFirst({
-      where: {
-        id: client_id,
-      },
-      select: {
-        id: true,
-        username: true,
-        deliveries: true,
-      },
-    });
+    const deliveries = await this.clientsRepository.findClientDeliveries(
+      client_id
+    );
 
     return deliveries;
   }

@@ -6,4 +6,6 @@ export interface IClientsRepository {
   findByUsername(username: string): Promise<Client | null>;
 
   create({ password, username }: ICreateClientDTO): Promise<Client>;
+
+  findClientDeliveries(client_id: string): Promise<Client | null>;
 }
